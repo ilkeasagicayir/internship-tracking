@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import Company from "./pages/company/Company";
 import HomePage2 from "./pages/HomePage2";
 import NewApplication from "./pages/company/NewApplication";
+import Application from "./pages/company/Application";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/company/login" element={<CompanyLogin />} />
           <Route path="/company" element={<Company />} />
           <Route path="/company/new" element={<NewApplication />} />
+          <Route path="/company/application" element={<Application />} />
         </Routes>
       </BrowserRouter>
     </>
