@@ -6,9 +6,9 @@ import { BiUserCircle } from "react-icons/bi";
 const CompanyNavbar = () => {
   const [Menu, setMenu] = React.useState(false);
   return (
-    <div className="flex w-full mr-3">
+    <div className="border-b mb-6 py-4 px-6 flex justify-between items-center gap-10  w-full mr-3">
       <div className="fixed flex items-center text-white font-bold text-3xl border-gray-400 top-0 left-0 w-full h-14 bg-[#1b3365]">
-        &nbsp; &nbsp; STAJ
+        &nbsp; &nbsp; ITS
         <BiUserCircle
           className="absolute  top-4 right-10  cursor-pointer hover:text-[#9ad2ff] "
           size={30}
@@ -34,7 +34,7 @@ const CompanyNavbar = () => {
           <li className="">
             <NavLink
               className="inline-block ml-5  text-xl border-white flex-col hover:text-[#9ad2ff]  transition-all ease-in-out"
-              to={"/login"}
+              to={"/company/new"}
             >
               New Internship Applications
             </NavLink>
@@ -42,7 +42,7 @@ const CompanyNavbar = () => {
           <li className="">
             <NavLink
               className="inline-block ml-5  text-xl border-white hover:text-[#9ad2ff]  transition-all ease-in-out"
-              to={"/Registration"}
+              to={"/"}
             >
               Internship Applications
             </NavLink>

@@ -7,17 +7,17 @@ const HomePage2 = () => {
           <div className="xl:px-40 px-10 w-1/2 flex flex-col h-full justify-center">
             <h1 className="text-center text-5xl font-bold mb-8">WELCOME</h1>
             <Link to={"/company/register"}>
-              <Button type="primary" className="w-full mb-6" size="large">
+              <Button className="w-full mb-6 bg-[#1b3365] text-white hover:text-[#9ad2ff]" size="large">
                 Company Register
               </Button>
             </Link>
             <Link to={"/company/login"}>
-              <Button type="primary" className="w-full mb-6" size="large">
+              <Button className="w-full mb-6 bg-[#1b3365] text-white hover:text-[#9ad2ff]" size="large">
                 Internship Supervisor Register
               </Button>
             </Link>
             <Link to={"/company/login"}>
-              <Button type="primary" className="w-full mb-6" size="large">
+              <Button className="w-full mb-6 bg-[#1b3365] text-white hover:text-[#9ad2ff]" size="large">
                 Student Register
               </Button>
             </Link>
