@@ -1,68 +1,116 @@
 import CompanyNavbar from "../../components/navbar/CompanyNavbar";
-import { Table } from "antd";
+import { Table, Modal, Input } from "antd";
+import { useState } from "react";
+import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const Application = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingApplication, setEditingApplication] = useState(null);
+  const [dataSource, setDataSource] = useState([
+    {
+      id: 1,
+      name: "Software",
+      number: 99,
+      type: "Compulsory",
+    },
+    {
+      id: 2,
+      name: "Hardware",
+      number: 99,
+      type: "Compulsory",
+    },
+    {
+      id: 3,
+      name: "DevOps",
+      number: 99,
+      type: "Compulsory",
+    },
+    {
+      id: 4,
+      name: "Data Science",
+      number: 99,
+      type: "Compulsory",
+    },
+  ]);
   const columns = [
     {
-      title: " Internship Name",
+      key: "1",
+      title: "Name",
       dataIndex: "name",
-      key: "name",
     },
     {
-      title: "Number of Applicants",
-      dataIndex: "age",
-      key: "age",
+      key: "2",
+      title: "Number of Applications",
+      dataIndex: "number",
     },
     {
-      dataIndex: "",
-      key: "x",
-      render: () => <a>Edit</a>,
-    },
-    {
-      dataIndex: "",
-      key: "y",
-      render: () => <a>Delete</a>,
-    },
-    {
-        dataIndex: "",
-        key: "y",
-        render: () => <a>View Applicants</a>,
+      key: "3",
+      title: "View ",
+      render: (record) => {
+        return (
+          <>
+            <Link to={`/`}>
+              <EyeOutlined style={{ color: "blue", fontSize: 18 }} />
+            </Link>
+          </>
+        );
       },
-  ];
-  const data = [
-    {
-      key: 1,
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      description:
-        "My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.",
     },
     {
-      key: 2,
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      description:
-        "My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.",
+      key: "4",
+      title: "Edit",
+      render: (record) => {
+        return (
+          <>
+            <EditOutlined
+              onClick={() => {
+                onEditApplication(record);
+              }}
+              style={{ fontSize: 18 }}
+            />
+          </>
+        );
+      },
     },
     {
-      key: 3,
-      name: "Not Expandable",
-      age: 29,
-      address: "Jiangsu No. 1 Lake Park",
-      description: "This not expandable",
-    },
-    {
-      key: 4,
-      name: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      description:
-        "My name is Joe Black, I am 32 years old, living in Sydney No. 1 Lake Park.",
+      key: "5",
+      title: "Delete",
+      render: (record) => {
+        return (
+          <>
+            <DeleteOutlined
+              onClick={() => {
+                onDeleteApplication(record);
+              }}
+              style={{ color: "red", fontSize: 18 }}
+            />
+          </>
+        );
+      },
     },
   ];
 
+  const onDeleteApplication = (record) => {
+    Modal.confirm({
+      title: "Are you sure, you want to delete this record?",
+      okText: "Yes",
+      okType: "danger",
+      onOk: () => {
+        setDataSource((pre) => {
+          return pre.filter((application) => application.id !== record.id);
+        });
+      },
+    });
+  };
+  const onEditApplication = (record) => {
+    setIsEditing(true);
+    setEditingApplication({ ...record });
+  };
+  const resetEditing = () => {
+    setIsEditing(false);
+    setEditingApplication(null);
+  };
   return (
     <>
       <CompanyNavbar />
@@ -71,21 +119,50 @@ const Application = () => {
           Internship Applications
         </h1>
         <Table
+          className="px-20"
           columns={columns}
-          expandable={{
-            expandedRowRender: (record) => (
-              <p
-                style={{
-                  margin: 0,
-                }}
-              >
-                {record.description}
-              </p>
-            ),
-            rowExpandable: (record) => record.name !== "Not Expandable",
+          dataSource={dataSource}
+        ></Table>
+        <Modal
+          title="Edit Application"
+          visible={isEditing}
+          okText="Save"
+          onCancel={() => {
+            resetEditing();
           }}
-          dataSource={data}
-        />
+          onOk={() => {
+            setDataSource((pre) => {
+              return pre.map((application) => {
+                if (application.id === editingApplication.id) {
+                  return editingApplication;
+                } else {
+                  return application;
+                }
+              });
+            });
+            resetEditing();
+          }}
+        >
+          <label htmlFor="name">Internship Name</label>
+          <Input className="mb-2"
+            value={editingApplication?.name}
+            onChange={(e) => {
+              setEditingApplication((pre) => {
+                return { ...pre, name: e.target.value };
+              });
+            }}
+          />
+          <label htmlFor="type">Internship Type</label>
+          <Input className="mb-2"
+            value={editingApplication?.type}
+            onChange={(e) => {
+              setEditingApplication((pre) => {
+                return { ...pre, department: e.target.value };
+              });
+            }}
+          />
+          
+        </Modal>
       </div>
     </>
   );
